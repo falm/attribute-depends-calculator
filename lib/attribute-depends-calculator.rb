@@ -1,0 +1,1 @@
+require 'attribute_depends_calculator'
