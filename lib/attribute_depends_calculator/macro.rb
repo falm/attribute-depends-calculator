@@ -7,3 +7,5 @@ module AttributeDependsCalculator
     end
   end
 end
+
+ActiveRecord::Base.send :extend, AttributeDependsCalculator::Macro
