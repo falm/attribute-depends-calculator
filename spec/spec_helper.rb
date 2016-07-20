@@ -2,14 +2,38 @@
 require "rubygems"
 require "rails"
 require "active_record"
+require 'database_cleaner'
+require 'attribute-depends-calculator'
+
+
+module Rails
+  class << self
+    def root
+      File.expand_path("../spec", __FILE__)
+    end
+  end
+end
+
+ActiveRecord::Base.establish_connection(:adapter  => 'sqlite3',
+                                        :database => ':memory:')
+
+# Requires supporting files with schema, models, etc,
+# in ./support/ and its subdirectories.
+Dir[File.expand_path(File.join(File.dirname(__FILE__),'support','**','*.rb'))].each { |f| require f }
 
 RSpec.configure do |config|
-  config.expect_with :rspec do |expectations|
-    expectations.include_chain_clauses_in_custom_matcher_descriptions = true
+
+  config.before(:suite) do
+    DatabaseCleaner.strategy = :transaction
+    DatabaseCleaner.clean_with :truncation
   end
 
-  config.mock_with :rspec do |mocks|
-    mocks.verify_partial_doubles = true
+  config.before(:each) do
+    DatabaseCleaner.start
+  end
+
+  config.after(:each) do
+    DatabaseCleaner.clean
   end
 
 end
