@@ -14,7 +14,7 @@ describe AttributeDependsCalculator do
     end
   end
 
-  context 'Dpends' do
+  context 'Depends' do
 
     it 'should auto calculate when order item changes' do
       expect(order.price).to eq(order_item.price)
@@ -26,6 +26,14 @@ describe AttributeDependsCalculator do
       origin_price = order.price
       OrderItem.create(order: order, product: order_item.product, price: 244)
       expect(order.reload.price).to eq(origin_price + 244)
+    end
+
+    it 'should auto calculate when destroy an order item' do
+      origin_price = order.price
+      OrderItem.create(order: order, product: order_item.product, price: origin_price)
+      expect(order.reload.price).to eq(origin_price * 2)
+      OrderItem.destroy(order.id)
+      expect(order.reload.price).to eq(origin_price)
     end
 
   end
