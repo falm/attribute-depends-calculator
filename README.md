@@ -1,4 +1,4 @@
-# AttributeDependsCalculator
+# AttributeDependsCalculator [![Build Status](https://travis-ci.org/falm/attribute-depends-calculator.svg?branch=master)](https://travis-ci.org/falm/attribute-depends-calculator)
 
 The scenario of the gem is when you have a attribute on model that value depends of a calculation of other model's attribute which attribute's model related. AttributeDependsCalculator will help you solve the case
 
