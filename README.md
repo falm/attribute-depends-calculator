@@ -1,4 +1,4 @@
-# AttributeDependsCalculator [![Build Status](https://travis-ci.org/falm/attribute-depends-calculator.svg?branch=master)](https://travis-ci.org/falm/attribute-depends-calculator)
+# Attribute Depends Calculator [![Build Status](https://travis-ci.org/falm/attribute-depends-calculator.svg?branch=master)](https://travis-ci.org/falm/attribute-depends-calculator) [![Coverage Status](https://coveralls.io/repos/github/falm/attribute-depends-calculator/badge.svg)](https://coveralls.io/github/falm/attribute-depends-calculator)
 
 The scenario of the gem is when you have a attribute on model that value depends of a calculation of other model's attribute which attribute's model related. AttributeDependsCalculator will help you solve the case
 
@@ -15,7 +15,7 @@ And then execute:
     $ bundle
 
 ## Usage
-Think about you have model order and order-item
+Assume you have model order and order-item
 ```ruby
 class Order < ActiveRecord::Base
   has_many :order_items
@@ -38,7 +38,7 @@ order_item.update(price: 100)
 order.reload.total_price
 #=> 150.0
 ```
-As above price of order automatically update when whatever order_items changes
+As above show the price of order automatically update when whatever order_items changes
 
 ## Contributing
 
