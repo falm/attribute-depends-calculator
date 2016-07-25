@@ -8,4 +8,5 @@ group :test do
   gem 'sqlite3', '>=1.3.6'
   gem 'rspec', '~> 2.11'
   gem 'database_cleaner'
+  gem 'coveralls', require: false
 end
