@@ -4,7 +4,9 @@ require "rails"
 require "active_record"
 require 'database_cleaner'
 require 'attribute-depends-calculator'
+require 'coveralls'
 
+Coveralls.wear!
 
 module Rails
   class << self
