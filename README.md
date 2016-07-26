@@ -1,5 +1,6 @@
-# Attribute Depends Calculator [![Build Status](https://travis-ci.org/falm/attribute-depends-calculator.svg?branch=master)](https://travis-ci.org/falm/attribute-depends-calculator) [![Coverage Status](https://coveralls.io/repos/github/falm/attribute-depends-calculator/badge.svg?branch=master)](https://coveralls.io/github/falm/attribute-depends-calculator?branch=master)
-The scenario of the gem is when you have a attribute on model that value depends of a calculation of other model's attribute which attribute's model related. AttributeDependsCalculator will help you solve the case
+# Attribute Depends Calculator [![Build Status](https://travis-ci.org/falm/attribute-depends-calculator.svg?branch=master)](https://travis-ci.org/falm/attribute-depends-calculator) [![Coverage Status](https://coveralls.io/repos/github/falm/attribute-depends-calculator/badge.svg?branch=master)](https://coveralls.io/github/falm/attribute-depends-calculator?branch=master) [![Code Climate](https://codeclimate.com/github/falm/attribute-depends-calculator/badges/gpa.svg)](https://codeclimate.com/github/falm/attribute-depends-calculator)
+
+The scenario of the gem is when you have an attribute on model that value depends of a calculation of other model's attribute which attribute's model related. AttributeDependsCalculator will help you solve the case
 
 ## Installation
 
@@ -18,7 +19,7 @@ Assume you have model order and order-item
 ```ruby
 class Order < ActiveRecord::Base
   has_many :order_items
-  depends total_price: {order_items: :price}
+  depend total_price: {order_items: :price}
 end
 
 class OrderItem < ActiveRecord::Base
