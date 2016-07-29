@@ -2,7 +2,7 @@ ActiveRecord::Schema.define do
 
   create_table :orders do |t|
     t.decimal :price, precision: 10, scale: 2, null: false
-    t.timestamps
+    t.timestamps null: false
   end
 
   create_table :order_items do |t|
@@ -11,13 +11,13 @@ ActiveRecord::Schema.define do
     t.integer :user_id, index: true
     t.integer :quantity
     t.decimal :price, precision: 10, scale: 2, null: false
-    t.timestamps
+    t.timestamps null: false
   end
 
   create_table :products do |t|
     t.string :name
     t.decimal :price, precision: 10, scale: 2, null: false
-    t.timestamps
+    t.timestamps null: false
   end
 
 end
