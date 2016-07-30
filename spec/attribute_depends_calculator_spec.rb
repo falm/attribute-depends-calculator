@@ -11,6 +11,7 @@ describe AttributeDependsCalculator do
   context 'Macro' do
     it 'should respond to depends macro' do
       expect(ActiveRecord::Base.respond_to?(:depend)).to be true
+      expect(ActiveRecord::Base.respond_to?(:attribute_depend)).to be true
     end
   end
 
@@ -38,6 +39,18 @@ describe AttributeDependsCalculator do
 
   end
 
+  context 'Parameter' do
 
+    it 'should raise error when operator incorrect' do
+
+      expect do
+        Order.class_eval do
+          attribute_depend price: {order_items: :price, operator: :divide}
+        end
+      end.to raise_error
+
+    end
+
+  end
 
 end
