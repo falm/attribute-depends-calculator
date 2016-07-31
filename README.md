@@ -40,6 +40,72 @@ order.reload.total_price
 ```
 As above show the price of order automatically update when whatever order_items changes
 
+## Advance
+
+The options **operator** had two cateogries of value, the default value of the gem is expression **sum**
+
+#### Operation
+
+```ruby
+class Order < ActiveRecord::Base
+  has_many :order_items
+  depend total_price: {order_items: :price, operator: :+} # or :*
+end
+```
+
+#### Expression
+
+The following expression can be use to calculate the collection of depends attributes
+
+**sum**
+
+```ruby
+class Order < ActiveRecord::Base
+  ...
+  depend total_price: {order_items: :price, operator: :sum} # default
+end
+```
+
+**average**
+
+```ruby
+class Order < ActiveRecord::Base
+  ...
+  depend avg_price: {order_items: :price, operator: :average}
+end
+```
+
+**count**
+
+```ruby
+class Order < ActiveRecord::Base
+  ...
+  depend order_items_count: {order_items: :price, operator: :count}
+end
+```
+
+**minimum**
+
+```ruby
+class Order < ActiveRecord::Base
+  ...
+  depend min_price: {order_items: :price, operator: :minimum}
+end
+```
+
+**maximum**
+
+```ruby
+class Order < ActiveRecord::Base
+  ...
+  depend max_price: {order_items: :price, operator: :maximum}
+end
+```
+
+
+
+
+
 ## Contributing
 
 1. Fork it ( http://github.com/zmbacker/enum_help/fork )
