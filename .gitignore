@@ -10,3 +10,4 @@
 .ruby-version
 .idea/
 *.gem
+*.un~
