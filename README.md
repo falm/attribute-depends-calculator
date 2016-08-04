@@ -41,7 +41,7 @@ order.reload.total_price
 ```
 As above show the price of order automatically update when whatever order_items changes
 
-## Advance
+## Advanced
 
 The options **operator** had two cateogries of value, the default value of the gem is expression **sum**
 
