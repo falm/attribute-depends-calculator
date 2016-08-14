@@ -2,6 +2,7 @@ ActiveRecord::Schema.define do
 
   create_table :orders do |t|
     t.decimal :price, precision: 10, scale: 2, null: false
+    t.integer :count, defautl: 0
     t.timestamps null: false
   end
 
