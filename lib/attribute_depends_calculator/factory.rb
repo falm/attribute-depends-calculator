@@ -7,7 +7,7 @@ module AttributeDependsCalculator
 
     extend Forwardable
 
-    def_delegators :parameter, :depend_association_name, :depend_column, :expression
+    def_delegators :parameter, :depend_association_name, :depend_column, :expression, :proc?, :callback
 
     def initialize(klass, column, params)
       self.klass, self.column = klass, column
@@ -17,6 +17,7 @@ module AttributeDependsCalculator
 
     def perform
       define_calculator
+      define_operator_callback
       append_callbacks
     end
 
@@ -25,10 +26,26 @@ module AttributeDependsCalculator
     def define_calculator
       self.klass.class_eval <<-METHOD, __FILE__, __LINE__ + 1
         def #{calculate_method_name}
-          total = self.#{depend_association_name}.#{expression}
+          total = #{calculate}
           update(:#{column} => total)
         end
       METHOD
+    end
+
+    def calculate
+      if self.proc?
+        "self.#{column}_depends_callback(#{depend_association_name})"
+      else
+        "self.#{depend_association_name}.#{expression}"
+      end
+    end
+
+    def define_operator_callback
+      callback, column = self.callback, self.column
+      return if callback.nil?
+      self.klass.class_eval do
+        define_method "#{column}_depends_callback", &callback
+      end
     end
 
     def calculate_method_name
