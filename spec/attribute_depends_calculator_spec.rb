@@ -51,6 +51,19 @@ describe AttributeDependsCalculator do
 
     end
 
+    it 'should proc params words' do
+      discount = 0.8
+      Order.class_eval do
+        attribute_depend price: {order_items: :price, operator: -> (relation) { relation.sum(:price) * discount } }
+      end
+
+      OrderItem.create(order: order, product: order_item.product, price: order.price)
+
+      order.reload
+      expect(order.price).to eq(order.order_items.sum(:price) * discount)
+
+    end
+
   end
 
 end
