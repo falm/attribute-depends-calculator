@@ -104,6 +104,18 @@ end
 ```
 
 
+**Proc**
+
+Proc can be passing in operator option, and the only one params is the active reload of the depended relate Model
+
+```ruby
+class Order < ActiveRecord::Base
+  ...
+  depend discount_price: {order_items: :price, operator: -> (items) { items.sum(:price) * discount } }
+end
+```
+
+
 
 
 
