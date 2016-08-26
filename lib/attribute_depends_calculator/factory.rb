@@ -1,3 +1,5 @@
+require 'forwardable'
+
 module AttributeDependsCalculator
   class Factory
 
@@ -5,7 +7,7 @@ module AttributeDependsCalculator
 
     attr_accessor :parameter
 
-    extend Forwardable
+    extend ::Forwardable
 
     def_delegators :parameter, :depend_association_name, :depend_column, :expression, :proc?, :callback
 
