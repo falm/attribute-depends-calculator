@@ -8,6 +8,10 @@ gemfile:
   - Gemfile
   - Gemfile.rails40
   - Gemfile.rails41
-  - Gemfile.rails50
+matrix:
+  include:
+    - rvm: 2.3.0
+      gemfile: Gemfile.rails50
+
 script: xvfb-run rspec
 before_install: gem install bundler -v 1.11.2
