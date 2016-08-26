@@ -4,5 +4,10 @@ rvm:
   - 2.1.5
   - 2.2
   - 2.3.0
+gemfile:
+  - Gemfile
+  - Gemfile.rails40
+  - Gemfile.rails41
+  - Gemfile.rails50
 script: xvfb-run rspec
 before_install: gem install bundler -v 1.11.2
