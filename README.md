@@ -3,6 +3,10 @@
 
 The scenario of the gem is when you have an attribute on model that value depends of a calculation of other model's attribute which attribute's model related. AttributeDependsCalculator will help you solve the case
 
+## Requirements
+1. Ruby **2.0+**
+2. Rails **4.0+**
+
 ## Installation
 
 Add this line to your application's Gemfile:
