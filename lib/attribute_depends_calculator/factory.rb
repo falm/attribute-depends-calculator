@@ -75,15 +75,17 @@ module AttributeDependsCalculator
     end
 
     def define_callback_methods
+      attr_name = klass_assoc_name
+      return unless attr_name
       self.association.class_eval <<-METHOD, __FILE__, __LINE__ + 1
         private
 
         def depends_update_#{column}
-          self.#{klass_assoc_name}.#{calculate_method_name}
+          self.#{attr_name}.#{calculate_method_name}
         end
 
         def depends_update_#{column}_around
-          _relation = self.#{klass_assoc_name}
+          _relation = self.#{attr_name}
           yield
           _relation.#{calculate_method_name}
         end
