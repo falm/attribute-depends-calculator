@@ -55,7 +55,10 @@ module AttributeDependsCalculator
     end
 
     def klass_assoc_name
-      @assoc_name ||= association.reflect_on_all_associations.find {|assoc| assoc.plural_name == klass.table_name}.name
+      @assoc_name ||= begin
+        relation = association.reflect_on_all_associations.find {|assoc| assoc.plural_name == klass.table_name}
+        relation ? relation.name : nil
+      end
     end
 
     def fetch_association
