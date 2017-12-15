@@ -62,37 +62,29 @@ module AttributeDependsCalculator
     end
 
     def fetch_association
-      ObjectSpace.const_get klass.reflect_on_association(depend_association_name).class_name
+      klass.reflect_on_association(depend_association_name).class_name.constantize
     end
 
     def append_callbacks
       append_callback_hook
-      define_callback_methods
     end
 
     def append_callback_hook
-      self.association.class_eval <<-METHOD, __FILE__, __LINE__ + 1
-        after_save :depends_update_#{column}
-        around_destroy :depends_update_#{column}_around
-      METHOD
+
+      self.association.after_save after_callback_proc
+      self.association.after_destroy after_callback_proc
+
     end
 
-    def define_callback_methods
+    def after_callback_proc
+
       attr_name = klass_assoc_name
       return unless attr_name
-      self.association.class_eval <<-METHOD, __FILE__, __LINE__ + 1
-        private
+      method_name = calculate_method_name
+      lambda  { |record|
+        record.public_send(attr_name).send(method_name)
+      }
 
-        def depends_update_#{column}
-          self.#{attr_name}.#{calculate_method_name}
-        end
-
-        def depends_update_#{column}_around
-          _relation = self.#{attr_name}
-          yield
-          _relation.#{calculate_method_name}
-        end
-      METHOD
     end
 
   end
