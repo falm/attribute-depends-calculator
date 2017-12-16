@@ -54,15 +54,8 @@ module AttributeDependsCalculator
       "calculate_and_update_#{column}"
     end
 
-    def klass_assoc_name
-      @assoc_name ||= begin
-        relation = association.reflect_on_all_associations.find {|assoc| assoc.plural_name == klass.table_name}
-        relation ? relation.name : nil
-      end
-    end
-
     def fetch_association
-      klass.reflect_on_association(depend_association_name).class_name.constantize
+      klass.reflections[depend_association_name.to_s].class_name.constantize
     end
 
     def append_callbacks
@@ -71,17 +64,18 @@ module AttributeDependsCalculator
 
     def append_callback_hook
 
-      self.association.after_save after_callback_proc
-      self.association.after_destroy after_callback_proc
+      association.after_save after_callback_proc
+      association.after_destroy after_callback_proc
 
     end
 
     def after_callback_proc
 
-      attr_name = klass_assoc_name
-      return unless attr_name
       method_name = calculate_method_name
-      lambda  { |record|
+      klass_name = klass.name
+
+      lambda { |record|
+        attr_name = record.class.reflect_on_all_associations.find {|assoc| assoc.class_name == klass_name}.name
         record.public_send(attr_name).send(method_name)
       }
 
