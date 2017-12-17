@@ -55,7 +55,7 @@ module AttributeDependsCalculator
     end
 
     def fetch_association
-      klass.reflections[depend_association_name.to_s].class_name.constantize
+      ObjectSpace.const_get klass.reflect_on_association(depend_association_name).class_name
     end
 
     def append_callbacks
