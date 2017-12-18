@@ -18,6 +18,7 @@ ActiveRecord::Schema.define do
   create_table :products do |t|
     t.string :name
     t.decimal :price, precision: 10, scale: 2, null: false
+    t.integer :sells_count, defautl: 0
     t.timestamps null: false
   end
 
