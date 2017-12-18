@@ -11,3 +11,4 @@
 .idea/
 *.gem
 *.un~
+.DS_Store
