@@ -5,7 +5,7 @@ require "spec_helper"
 describe AttributeDependsCalculator do
 
   let(:order) {Order.create(price: 100) }
-  let(:product) {Product.create(price: 100, name: 'iPhone')}
+  let(:product) {Product.create(price: 100, name: 'iPhone', sells_count: 0)}
   let(:order_item) {OrderItem.create(order: order, product: product, price: product.price)}
 
   context 'Macro' do
@@ -27,6 +27,12 @@ describe AttributeDependsCalculator do
       origin_price = order.price
       OrderItem.create(order: order, product: order_item.product, price: 244)
       expect(order.reload.price).to eq(origin_price + 244)
+    end
+
+    it 'should change sells count of product' do
+      sells_count = product.sells_count
+      OrderItem.create(order: order, product: product, price: 244)
+      expect(product.reload.sells_count).to eq(sells_count + 1)
     end
 
     it 'should auto calculate when destroy an order item' do
